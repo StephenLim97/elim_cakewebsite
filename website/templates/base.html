@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link href="{{url_for('static', filename='asset/styles_base.css')}}" rel="stylesheet" >
+
+<!--    <title>Profile Dropdown</title>-->
+  </head>
+
+  <body>
+  <nav>
+      <ul class="navbar-list">
+
+          <li class="hideOnMobile"> <a href="#">Logo</a></li>
+          {% if user.is_authenticated %}
+          <li class="hideOnMobile"  onclick="showSidebar()"><a href="{{ url_for('views.Home') }}"> <i class="fa-sharp fa-solid fa-house"></i> </a></li>
+          {% endif %}
+          <li class="hideOnMobile"><a href="#" ><i class="fa-brands fa-solid fa-whatsapp"></i></a></li>
+          <li class="hideOnMobile"><a href="#"><i class="fa-brands fa-solid fa-facebook"></i></a></li>
+          <li class="hideOnMobile"><a href="#"><i class="fa-brands fa-solid fa-instagram"></i></a></li>
+          <li class="hideOnMobile"><a href="#"><i class="fa-solid fa-user"></i></a></li>
+          <li class="hideOnMobile"><a href="/TestingPage">Testing Page</a></li>
+
+
+        <li class="profile-dropdown">
+        <div onclick="toggle()" class="profile-dropdown-btn">
+          <div class="profile-img">
+            <i class="fa-solid fa-circle"></i>
+          </div>
+
+          <span>
+
+              {% if done_logout is false and login_with_user is true %}
+                  {{ user.first_name }}
+              {% else %}
+                  User
+              {% endif %}
+
+              <i class="fa-solid fa-angle-down"></i>
+          </span>
+        </div>
+
+        <ul class="profile-dropdown-list">
+          {% if user.is_authenticated %}
+            <li class="profile-dropdown-list-item">
+              <a href="{{ url_for('views.EditProfile') }}" id="EditProfile">
+                <i class="fa-regular fa-user"></i>
+                Edit Profile
+              </a>
+            </li>
+          {% endif %}
+
+          <li class="profile-dropdown-list-item">
+            <a href="#">
+              <i class="fa-regular fa-envelope"></i>
+              Inbox
+            </a>
+          </li>
+
+          <li class="profile-dropdown-list-item">
+            <a href="#">
+              <i class="fa-solid fa-chart-line"></i>
+              Analytics
+            </a>
+          </li>
+
+          <li class="profile-dropdown-list-item">
+            <a href="#">
+              <i class="fa-solid fa-sliders"></i>
+              Settings
+            </a>
+          </li>
+
+          <li class="profile-dropdown-list-item">
+            <a href="#">
+              <i class="fa-solid fa-circle-question"></i>
+              Help & Support
+            </a>
+
+          </li>
+         {% if not done_logout %}
+            <hr>
+          <li class="profile-dropdown-list-item">
+
+            <a href="{{ url_for('auth.logout') }}" id="logout">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                {% if user.is_authenticated %}
+                    Log Out
+                {% else %}
+                    Log In
+                {% endif %}
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+        </li>
+        <li class="menu" onclick="showSidebar()"><a href="#"><i class="fa-sharp fa-solid fa-bars"></i></a></li>
+
+      </ul>
+
+
+
+    <ul class="sidebar">
+        <li class ="cross" onclick="hideSidebar()"><a href="#"><i class="fa-solid fa-xmark"></i></a></li>
+        {% if user.is_authenticated %}
+        <li><a href="/Home" id="Home"><i class="fa-sharp fa-solid fa-house"></i></a></li>
+        {% endif %}
+        <li><a href="#" ><i class="fa-brands fa-solid fa-whatsapp"></i></a></li>
+        <li><a href="#"><i class="fa-brands fa-solid fa-facebook"></i></a></li>
+        <li><a href="#"><i class="fa-brands fa-solid fa-instagram"></i></a></li>
+        <li><a href="#"><i class="fa-solid fa-user"></i></a></li>
+    </ul>
+  </nav>
+
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          {% if category =='error' %}
+          <div class="alert alert-danger alter-dismissable fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% else %}
+          <div class="alert alert-success alter-dismissable fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="container-fluid">{% block content %} {% endblock %}</div>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
+
+<!--    <script-->
+<!--      type="text/javascript"-->
+<!--      src ="{{ url_for ('static', filename='index.js')}}"-->
+<!--     ></script>-->
+     <script src="{{url_for('static', filename='asset/script_base.js')}}"></script>
+
+  </body>
+</html>

@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+/* Body styles */
+body {
+  margin: 0px;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f0edce;
+  background: linear-gradient(to right, #e2e2e2, #d9c8da);
+
+
+
+}
+
+
+
+
+/* Styles for unordered lists and list items */
+ul,li {
+  padding: 0;
+  list-style-type: none;
+}
+
+/* Styles for heading elements (h1, h2, h3) */
+h1,h2,h3 {
+  color: #767f7e;
+}
+
+/* Styles for paragraph elements */
+p {
+  color: #828b8a;
+}
+
+header,hr {
+  max-width: auto;
+  margin: 40px auto;
+  border-bottom: 1px solid #bbc7c7;
+
+}
+
+.grid-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap:60px;
+/*  max-width:1200px;*/
+  margin: 20px auto;
+}
+
+.featured{
+  grid-column: span 3;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+
+
+
+}
+.selected {
+    background-color: #d0e8ff; /* Color when selected */
+    border-color: #007bff;     /* Border color when selected */
+    border-radius: 16px; /* Add this line */
+}
+.featured:not(.selected):hover {
+  background-color: #d9c8da;
+  border-radius: 16px; /* Add this line */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Add this line */
+  backdrop-filter: blur(11.6px);
+  -webkit-backdrop-filter: blur(11.6px);
+}
+
+
+article img, article.featured img, .carousel-item img{
+  width:100%;
+  border: 4px solid #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Add this line */
+  backdrop-filter: blur(11.6px);
+  -webkit-backdrop-filter: blur(11.6px);
+
+}
+
+article p, article h3{
+  margin: 20px 10px;
+}
+
+/*responsive*/
+@media screen and (max-width:980px){
+  article{
+    grid-column: span 3;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+
+  }
+}
+
+@media screen and (max-width:760px){
+  article, article.featured{
+    display: block;
+    margin: 0,20px;
+
+
+  }
+}

@@ -1,0 +1,307 @@
+{% extends "base.html" %}{% block title %}Profile{% endblock %}
+{% block content %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            margin: 20px auto;
+        }
+
+        .card {
+            border: none;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .profile-info {
+            text-align: center;
+        }
+
+        .profile-info h5 {
+            margin-bottom: 10px;
+        }
+
+        .profile-info p {
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        .profile-info a {
+            padding-left: 0rem;
+            transition: background-color 0.2s ease-in, padding-left 0.2s;
+            text-decoration: none;
+
+            /*        font-weight: 20px;*/
+            /*        font-size: 0.825rem;*/
+
+        }
+         .profile-info li {
+            padding-left: 0rem;
+            transition: background-color 0.2s ease-in, padding-left 0.2s;
+            position: relative;
+             text-align: left;
+
+
+
+        }
+        .profile-info li:hover {
+            padding-left: 0.5rem;
+            background-color: #f0f0f0;
+            transition: background-color 0.2s ease-in, padding-left 0.2s;
+
+        }
+        .account-settings .about li:active {
+            padding-left: 1rem;
+        }
+
+        .profile-section, .password-section {
+            margin-top: 20px;
+        }
+
+        .section {
+            transition: all 0.3s ease;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .form-control {
+            margin-bottom: 15px;
+            padding-right: 20px; /* Added padding to the right */
+        }
+
+        .form-group {
+            margin-bottom: 20px; /* Added margin to the bottom of form groups */
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-primary {
+            color: #007bff;
+        }
+
+        .btn-secondary, .btn-primary {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row gutters">
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+            <div class="card h-100">
+                <div class="card-body profile-info">
+                    <img src="https://via.placeholder.com/150" alt="Profile Picture" class="profile-pic">
+                    <h5 class="card-title">{{user.first_name}}</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="selection" data-section="profile">Profile</a></li>
+                        <li><a href="#" class="selection" data-section="password">Password</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <!-- Profile Section -->
+                    <div class="section profile-section active">
+                        <form action="{{ url_for('views.EditProfile') }}" method="POST">
+                            <div class="row gutters">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <h6 class="mb-2 text-primary">Personal Details</h6>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="fullName">Full Name</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="fullName"
+                                            name="fullName"
+                                            placeholder="{{ user.first_name }}"
+                                        >
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input
+                                            type="email"
+                                            class="form-control"
+                                            id="email"
+                                            name="email"
+                                            placeholder="{{ user.email }}"
+                                        >
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="phone">Phone</label>
+                                        <input
+                                            type="text"
+                                            name="phone"
+                                            class="form-control"
+                                            id="phone"
+                                            value="{{ information.phone if information else '' }}"
+                                            placeholder="Please Enter Phone Number"
+                                        >
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="street">Street</label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="street"
+                                               name="street"
+                                               value="{{ information.street if information else '' }}"
+                                               placeholder="Enter Street">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="city">City</label>
+                                        <input
+                                                type="text"
+                                                class="form-control"
+                                                id="city"
+                                                name="city"
+                                                value="{{ information.city if information else '' }}"
+                                                placeholder="Enter City">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="state">State</label>
+                                        <input type="text" class="form-control" id="state" name="state" placeholder="Enter State" value="{{ information.state if information else '' }}">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="zipCode">Zip Code</label>
+                                        <input type="text" class="form-control" id="zipCode" name="zipCode" placeholder="Zip Code" value="{{ information.zipcode if information else '' }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Submit Button -->
+                            <div class="row gutters">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <div class="text-right">
+                                       <a href="{{ url_for('views.Home') }}" class="btn btn-secondary" role="button">
+                                                    Cancel
+                                       </a>
+                                        <button type="submit" value="editProfile" name="updateProfile" class="btn btn-primary" >
+                                            Update
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Password Section -->
+                    <div class="section password-section hidden">
+                        <form action="{{ url_for('views.EditProfile') }}" method="POST">
+                            <div class="row gutters">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <h6 class="mb-2 text-primary">Change Password</h6>
+                                </div>
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <div class="form-group">
+                                        <label for="currentPassword">Current Password</label>
+                                        <input
+                                            type="password"
+                                            class="form-control"
+                                            id="currentPassword"
+                                            name="currentPassword"
+                                            placeholder="Enter current password"
+                                        >
+                                    </div>
+                                </div>
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <div class="form-group">
+                                        <label for="newPassword">New Password</label>
+                                        <input
+                                            type="password"
+                                            class="form-control"
+                                            id="newPassword"
+                                            name="newPassword"
+                                            placeholder="Enter new password"
+                                        >
+                                    </div>
+                                </div>
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <div class="form-group">
+                                        <label for="confirmPassword">Confirm Password</label>
+                                        <input
+                                            type="password"
+                                            class="form-control"
+                                            id="confirmPassword"
+                                            name="confirmPassword"
+                                            placeholder="Confirm new password"
+                                        >
+                                    </div>
+                                </div>
+                                <!-- Submit Button -->
+                                <div class="row gutters">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div class="text-right">
+
+                                                 <a href="{{ url_for('views.Home') }}" class="btn btn-secondary" role="button">
+                                                    Cancel
+                                                </a>
+
+                                            <button type="submit" value="changePassword" name="updateProfile" class="btn btn-primary" >
+                                                Change Password
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+<!-- Optional JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+
+<!-- New JavaScript code for toggling sections -->
+<script>
+    $(document).ready(function() {
+        // Function to toggle sections
+        $('.selection').click(function(e) {
+            e.preventDefault();
+            var section = $(this).data('section');
+            $('.section').addClass('hidden');
+            $('.' + section + '-section').removeClass('hidden');
+        });
+    });
+</script>
+</body>
+</html>
+{% endblock %}
